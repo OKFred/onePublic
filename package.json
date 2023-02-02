@@ -1,0 +1,16 @@
+{
+    "name": "one-public",
+    "version": "1.0.0",
+    "description": "简易信息查询",
+    "main": "app.js",
+    "scripts": {
+        "debug": "node --inspect=0.0.0.0:9229 app.js",
+        "dev": "node --experimental-fetch app.js"
+    },
+    "keywords": [
+        "query"
+    ],
+    "author": "FredZ",
+    "type": "module",
+    "license": "ISC"
+}
