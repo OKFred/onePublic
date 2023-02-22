@@ -12,5 +12,8 @@
     ],
     "author": "FredZ",
     "type": "module",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "jsdom": "^21.1.0"
+    }
 }
