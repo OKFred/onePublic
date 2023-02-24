@@ -1,0 +1,1 @@
+console.log(`how are you? Now is ${new Date()}\nTime to serve the public!\n`);

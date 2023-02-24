@@ -12,11 +12,12 @@
     if (typeof fetch !== "undefined") return fetch;
     let _fetch;
     try {
-        _fetch = await import("node-fetch").then((fetch) => fetch);
+      _fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
     } catch (e) {
         return console.log(`服务器环境将使用node-fetch模块，请先安装: npm i node-fetch\n
     `); //node 自带的fetch还待完善，存在set-cookie读取问题，等LTS先 https://github.com/nodejs/undici/issues/1616
     }
+    console.log("node-fetch模块已全局加载", _fetch);
     globalThis.fetch = _fetch; //全局注入fetch对象
     return _fetch;
 })();

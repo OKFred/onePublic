@@ -21,6 +21,7 @@
       String.prototype.encodeHTMLEntity(编码HTML实体)\n
       `);
     }
+    console.log("jsdom_document模块已全局加载", dom);
     globalThis.document = dom; //全局注入document对象
     return dom;
 })();

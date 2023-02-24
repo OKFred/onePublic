@@ -6,13 +6,13 @@
 
 import fs from "fs";
 import path from "path";
+import mimeMap from "../../base/mimeMap.js";
 
 /**
  * @desc 依赖检查
  * @returns {boolean} res - 检查结果
  **/
 (async function selfCheck() {
-    console.log("准备工作");
     let nodeVersion = process.versions.node.split(".");
     if (nodeVersion[0] < 16 && nodeVersion[1] < 15) {
         console.log("需要16.15版本以上的nodeJS。请先更新");
@@ -32,13 +32,35 @@ import path from "path";
  */
 
 async function downloader({ url, fetchOptions, saveAs, savePath } = {}) {
-    console.log("开始下载");
-    console.time("下载耗时");
+    console.log("⏬开始下载");
+    console.time("⌛下载耗时");
     let res = await fetch(url, fetchOptions);
+    if (!saveAs) {
+        let contentDisposition = res.headers.get("content-disposition") || ";_downloaded";
+        let contentType = res.headers.get("content-type") || "";
+        let arr = contentDisposition.split(";") || [`filename="_downloaded`];
+        let fileNameArr = arr[2] ? arr[2].split(`''`) : arr[1].split(`="`);
+        let defaultName = fileNameArr.length === 2 ? fileNameArr[1] : "";
+        saveAs = defaultName ? decodeURIComponent(defaultName) : "_downloaded";
+        if (saveAs === "_downloaded") {
+            for (let [k, v] of Object.entries(mimeMap)) {
+                if (contentType === v) {
+                    saveAs = saveAs + k;
+                    break;
+                }
+            }
+        }
+    } //如果没有指定文件名，则从响应头中获取
     let fileAB = await res.arrayBuffer();
-    fs.writeFileSync(path.join(savePath, saveAs), Buffer.from(fileAB));
-    console.log("已下载 " + saveAs);
-    console.timeEnd("下载耗时");
+    let finalPath = path.join(savePath, saveAs);
+    try {
+        fs.writeFileSync(finalPath, Buffer.from(fileAB));
+    } catch (e) {
+        console.log("下载失败，请检查保存路径：" + finalPath, e.message);
+        return false;
+    }
+    console.timeEnd("⌛下载耗时");
+    console.log("✅已下载： " + finalPath);
     return true;
 }
 

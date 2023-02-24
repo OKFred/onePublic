@@ -9,7 +9,7 @@ import explorer from "../service/client/explorer.js";
 
 let myDownloader = async () => {
     let pathArr = ["..", "..", "download"];
-    let saveAs = "my.jpg";
+    let saveAs = "";
     let fetchOptions = {
         method: "GET",
     };
@@ -17,7 +17,7 @@ let myDownloader = async () => {
         "https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/topnav/newbaike-889054f349.png";
     let dirObj = explorer.makeDirectory({ pathArr });
     if (!dirObj.status) return console.log("目录创建失败");
-    console.log("当前目录", dirObj.result);
+    console.log("\n当前目录", dirObj.result);
     let savePath = dirObj.result;
     return await iexplore.downloader({ url, fetchOptions, saveAs, savePath });
 };
