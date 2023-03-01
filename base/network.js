@@ -12,7 +12,7 @@
     if (typeof fetch !== "undefined") return fetch;
     let _fetch;
     try {
-      _fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+        _fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
     } catch (e) {
         return console.log(`服务器环境将使用node-fetch模块，请先安装: npm i node-fetch\n
     `); //node 自带的fetch还待完善，存在set-cookie读取问题，等LTS先 https://github.com/nodejs/undici/issues/1616
@@ -329,4 +329,4 @@ async function sleep(milsec) {
 }
 
 export default doFetch;
-export { objToParam, paramToObj, sleep };
+export { doFetch, objToParam, paramToObj, sleep };

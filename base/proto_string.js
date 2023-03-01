@@ -5,28 +5,6 @@
  */
 
 /**
- * @desc 依赖检查
- * @return {object} dom - document对象
- * */
-(async function selfCheck() {
-    if (typeof document !== "undefined") return document;
-    let dom;
-    try {
-        dom = await import("jsdom").then((jsdom) => {
-            return new jsdom.JSDOM().window.document;
-        });
-    } catch (e) {
-        return console.log(`以下函数依赖jsdom模块，请先安装: npm i jsdom\n
-      String.prototype.decodeHTMLEntity(解码HTML实体)\n
-      String.prototype.encodeHTMLEntity(编码HTML实体)\n
-      `);
-    }
-    console.log("jsdom_document模块已全局加载", dom);
-    globalThis.document = dom; //全局注入document对象
-    return dom;
-})();
-
-/**
  * @desc 单词首字母大写(空格分隔)
  * @return {string} result - 转换结果
  * @example
@@ -100,12 +78,17 @@ String.prototype.encodeNonASCII = function () {
  * str.decodeHTMLEntity(); // "<div>hello world</div>"
  * */
 String.prototype.decodeHTMLEntity = function () {
-    if (typeof document !== "object") return;
-    let textarea = document.createElement("textarea");
-    textarea.innerHTML = this;
-    let value = textarea.value;
-    textarea.remove();
-    return value;
+    let text = this;
+    let map = {
+        "&amp;": "&",
+        "&lt;": "<",
+        "&gt;": ">",
+        "&quot;": '"',
+        "&#039;": "'",
+    };
+    return text.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, (m) => {
+        return map[m];
+    });
 };
 
 /**
@@ -116,10 +99,17 @@ String.prototype.decodeHTMLEntity = function () {
  * str.encodeHTMLEntity(); // "&lt;div&gt;hello world&lt;/div&gt;"
  * */
 String.prototype.encodeHTMLEntity = function () {
-    if (typeof document !== "object") return;
-    let div = document.createElement("div");
-    div.appendChild(document.createTextNode(this));
-    return div.innerHTML;
+    let text = this;
+    let map = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;",
+    };
+    return text.replace(/[&<>"']/g, (m) => {
+        return map[m];
+    });
 };
 
 /**
