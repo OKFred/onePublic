@@ -5,6 +5,24 @@
  */
 
 /**
+ * @desc 判断字符串是否为空
+ * @return {boolean} result - 判断结果
+ * @example
+ * let str = "";
+ * str.isNull(); // true
+ * */
+String.prototype.isNull = function () {
+    let value = this;
+    return (
+        value === undefined ||
+        value === "undefined" ||
+        value === null ||
+        value === "null" ||
+        value === ""
+    );
+};
+
+/**
  * @desc 单词首字母大写(空格分隔)
  * @return {string} result - 转换结果
  * @example
