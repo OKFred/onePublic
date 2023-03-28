@@ -8,7 +8,7 @@ import explorer from "../service/client/explorer.js";
  */
 
 let myDownloader = async () => {
-    let pathArr = ["..", "..", "download"];
+    let pathArr = ["..", "..", "public", "download"];
     let saveAs = "";
     let fetchOptions = {
         method: "GET",
