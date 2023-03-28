@@ -1,7 +1,7 @@
 /**
  * @author Fred
  * @desc fetch网络请求封装
- * @since 2023-02-22 18:27:00
+ * @since 2023-03-28 09:52:00
  */
 
 /**
@@ -120,6 +120,8 @@ async function headerMaker(queryObj) {
     } else if (/urlencoded/i.test(contentType)) {
         header.body = objToParam(queryObj.request.data);
     } else if (/form(-)?data/gi.test(contentType)) {
+        delete header.headers["Content-Type"];
+        delete header.headers["content-type"];
         let bodyData;
         if (queryObj.request.data instanceof FormData) {
             bodyData = queryObj.request.data;

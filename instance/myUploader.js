@@ -31,7 +31,7 @@ async function fileUploadQuery(req, res) {
             if (err) console.log(err);
         });
     }
-    res.status(200).json({ message: "上传成功", status: 200, data: urlArr });
+    res.status(200).json({ message: "上传成功", status: 200, success: true, data: urlArr });
 }
 
 async function fileReadQuery(req, res) {
