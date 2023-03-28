@@ -125,22 +125,30 @@ async function headerMaker(queryObj) {
         let bodyData;
         if (queryObj.request.data instanceof FormData) {
             bodyData = queryObj.request.data;
+        } else if (queryObj.request.fileArr && queryObj.request.fileArr.length) {
+            bodyData = new FormData();
+            queryObj.request.fileArr.forEach((fileObj) => {
+                if (typeof fileObj === "object") {
+                    let { name, blob } = fileObj;
+                    bodyData.append(name, blob);
+                }
+            }); //兼容传多个文件的情况
         } else {
             bodyData = new FormData();
             for (let [k, v] of Object.entries(queryObj.request.data)) {
                 if (typeof v !== "object" || v instanceof Blob) {
-                    bodyData.set(k, v);
+                    bodyData.append(k, v);
                 } /* else if (v == "$$blob") {
                         // extension 浏览器插件前后台数据传递，需要做下兼容，blob→formData:
                         let file = queryObj.request.file;
                         let data = await fetch(file.url);
                         let blobData = await data.blob();
                         queryObj.request.file.size = blobData.size;
-                        bodyData.set(k, blobData, file.name);
+                        bodyData.append(k, blobData, file.name);
                     } */ else {
-                    bodyData.set(k, JSON.stringify(v));
+                      bodyData.append(k, JSON.stringify(v));
                 }
-            }
+            } //备用方案
         }
         header.body = bodyData;
     }

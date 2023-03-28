@@ -9,29 +9,34 @@ let root = process.cwd();
     let pathArr = ["..", "..", "public", "upload"];
     let dirObj = explorer.makeDirectory({ pathArr });
     if (!dirObj.status) return console.log("目录创建失败");
-    console.log("\n上传当前目录", dirObj.result);
+    console.log("\n当前上传目录", dirObj.result);
 })();
 
 async function fileUploadQuery(req, res) {
     let urlArr = [];
     for (let value of Object.values(req.files)) {
-        let { fieldName, path, type } = value;
-        let fileExtension = "";
-        for (let [key, value] of Object.entries(mimeObj)) {
-            if (type === value) {
-                fileExtension = key;
-                break;
+        let fileArr = Array.isArray(value) ? value : [value]; //兼容传多个文件的情况
+        for (let fileObj of fileArr) {
+            let { originalFilename, path, type } = fileObj;
+            let fileExtension = "";
+            for (let [k, v] of Object.entries(mimeObj)) {
+                if (type === v) {
+                    fileExtension = k;
+                    break;
+                } //找到文件后缀名
             }
+            let newPath = `./public/upload/${originalFilename}${fileExtension}`;
+            let serverIP = globalThis.internalIPAddress;
+            let PORT = global.envGetter("PORT") || 3000;
+            urlArr.push(
+                `http://${serverIP}:${PORT}/rest/file/read/${originalFilename}${fileExtension}`,
+            );
+            fs.copyFile(path, newPath, (err) => {
+                if (err) console.log(err);
+            });
         }
-        let newPath = `./public/upload/${fieldName}${fileExtension}`;
-        let serverIP = globalThis.internalIPAddress;
-        let PORT = global.envGetter("PORT") || 3000;
-        urlArr.push(`http://${serverIP}:${PORT}/rest/file/read/${fieldName}${fileExtension}`);
-        fs.copyFile(path, newPath, (err) => {
-            if (err) console.log(err);
-        });
     }
-    res.status(200).json({ message: "上传成功", status: 200, success: true, data: urlArr });
+    res.status(200).json({ message: "上传成功", code: 200, success: true, data: urlArr });
 }
 
 async function fileReadQuery(req, res) {
