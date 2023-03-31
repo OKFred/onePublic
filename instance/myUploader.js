@@ -36,11 +36,13 @@ async function fileUploadQuery(req, res) {
             });
         }
     }
+    console.log("已上传", urlArr.join("\n"));
     res.status(200).json({ message: "上传成功", code: 200, success: true, data: urlArr });
 }
 
 async function fileReadQuery(req, res) {
     let { url } = req;
+    url = decodeURIComponent(url);
     let pathArr = url.split("/");
     let fileName = pathArr[pathArr.length - 1];
     let filePath = `./public/upload/${fileName}`;
