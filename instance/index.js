@@ -4,5 +4,7 @@
  */
 
 import myDownloader from "./myDownloader.js"; //下载文件
+import myServiceMaker from "./myServiceMaker.js";
 
 myDownloader();
+globalThis.myServiceMaker = myServiceMaker;

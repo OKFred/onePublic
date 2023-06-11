@@ -6,6 +6,7 @@
 
 import explorer from "../service/client/explorer.js";
 import child_process from "child_process";
+export default main;
 
 /**
  * @desc 配置文件参考
@@ -19,9 +20,8 @@ let _config = {
     serviceParams: "npm run pro",
 };
 
-main();
 function main() {
-    let configDirectory = "./myServices";
+    let configDirectory = "../instance/myServices/";
     let configJSONFiles = explorer.readDirectory({
         directory: configDirectory,
         fileExtension: "json",
