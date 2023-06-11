@@ -178,3 +178,12 @@ String.prototype.hexToFloat = function hexToFloat() {
     result = float * sign;
     return result;
 };
+
+String.prototype.hexToASCII = function hexToASCII(str1 = this) {
+    let hex = str1.toString();
+    let str = "";
+    for (let n = 0; n < hex.length; n += 2) {
+        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+    return str;
+}; //16进制 → ASCII

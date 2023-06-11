@@ -5,16 +5,6 @@
  */
 
 /**
- * @desc 转换为货币格式(保留两位)
- * @return {string} result - 转换结果
- */
-Number.prototype.toCurrency = function () {
-    let thisNumber = Number(this);
-    let result = thisNumber.toFixed(2);
-    return result;
-};
-
-/**
  * @desc 转换为安全数字
  * @return {number} result - 转换结果
  * @example
