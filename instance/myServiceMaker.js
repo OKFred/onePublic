@@ -21,17 +21,17 @@ let _config = {
 };
 
 function main() {
-    let configDirectory = "../instance/myServices/";
+    let configDirectory = "./instance/myServices/";
     let configJSONFiles = explorer.readDirectory({
         directory: configDirectory,
         fileExtension: "json",
     });
     if (!configJSONFiles.status) return console.log("读取配置文件失败");
-    console.log(`当前配置文件列表：${configJSONFiles.result}`);
+    console.log(`当前配置文件列表`,configJSONFiles.result);
     for (let configJSONFile of configJSONFiles.result) {
         let configObj = explorer.readFile({
             directory: configDirectory,
-            fileName: configJSONFile,
+            fileName: configJSONFile.fileName,
         });
         if (!configObj.status) return console.log("读取配置文件失败");
         let configJSON = configObj.result;
@@ -53,8 +53,7 @@ function makeExecuteFile(config = {}) {
     let root = "/";
     pathArr.pop();
     pathArr.unshift(root);
-    makeDirectory({ pathArr, root });
-    let dirObj = explorer.makeDirectory({ pathArr });
+    let dirObj =  explorer.makeDirectory({ pathArr, root });
     if (!dirObj.status) return console.log("目录创建失败");
     console.log("\n当前目录", dirObj.result);
     let content = makeExecuteTemplate(config);
@@ -64,7 +63,7 @@ function makeExecuteFile(config = {}) {
         content,
         force: true,
     });
-    if (!fileObj.status) return console.log("文件创建失败");
+    if (!fileObj.status) return console.log("执行文件创建失败");
     console.log("\n文件创建成功", fileObj.result);
 }
 
@@ -79,7 +78,7 @@ function makeServiceFile(config = {}) {
         content,
         force: true,
     });
-    if (!fileObj.status) return console.log("文件创建失败");
+    if (!fileObj.status) return console.log("服务文件创建失败");
     console.log("\n文件创建成功", fileObj.result);
 }
 

@@ -25,8 +25,8 @@ function readFile({ directory, fileName } = {}) {
         if (!fs.existsSync(filePath)) {
             return { status: false, result: filePath, message: "文件不存在" };
         }
-        fs.readFileSync(filePath);
-        return { status: true, result: filePath };
+        let result = fs.readFileSync(filePath);
+        return { status: true, result };
     } catch (e) {
         // console.log(e.message);
         return { status: false, result: e };
@@ -199,8 +199,8 @@ function readDirectory({ directory, fileExtension } = {}) {
             let isDirectory = stat.isDirectory();
             if (fileExtensionReg && !fileExtensionReg.test(file)) continue;
             result.push({
-                name: file,
-                size: stat.size,
+                fileName: file,
+                fileSize: stat.size,
                 dateModified: new Date(stat.mtime).Format("yyyy-MM-dd hh:mm:ss"),
                 isDirectory,
             });
