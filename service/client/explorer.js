@@ -135,9 +135,28 @@ function deleteFile({ fromFile, fromDirectory } = {}) {
  * @param {Array} obj.pathArr - 目录数组，如：["download", "images"]
  * @returns {Object} res - 生成结果
  */
-function makeDirectory({ pathArr, root } = {}) {
+function makeDirectory({ pathStr, pathArr, root, force } = {}) {
     // console.log("生成目录");
     let args = [];
+    if (pathStr) {
+        if (fs.existsSync(pathStr)) {
+            if (!force) return { status: true, result: pathStr };
+            try {
+                console.log("目录已存在，尝试强制覆盖");
+                fs.rmSync(pathStr, { recursive: true, force });
+            } catch (e) {
+                // console.log(e.message);
+                return { status: false, result: e };
+            }
+        } //目录已存在，可选覆盖
+        try {
+            fs.mkdirSync(pathStr, { recursive: true });
+            return { status: true, result: pathStr };
+        } catch (e) {
+            // console.log(e.message);
+            return { status: false, result: e };
+        }
+    }
     if (!root) root = __dirname;
     let result = root;
     for (let pathName of pathArr) {

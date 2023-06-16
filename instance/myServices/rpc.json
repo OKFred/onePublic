@@ -1,7 +1,0 @@
-{
-    "serviceOwner": "zq",
-    "serviceProgram": "NodeJS",
-    "serviceProject": "rpcServer",
-    "serviceExecutePath": "/home/zq/WorkSpace/NodeJS/rpcServer",
-    "serviceParams": "npm run pro"
-}

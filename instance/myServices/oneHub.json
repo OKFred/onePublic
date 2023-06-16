@@ -1,0 +1,8 @@
+{
+    "serviceOwner": "zq",
+    "serviceProgram": "NodeJS",
+    "serviceProject": "oneHub",
+    "serviceParentFolder": "/home/zq/WorkSpace/NodeJS/",
+    "serviceRepository": "https://github.com/OKFred/oneHub",
+    "serviceParams": "npm run build"
+}

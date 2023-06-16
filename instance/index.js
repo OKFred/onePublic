@@ -8,3 +8,5 @@ import myServiceMaker from "./myServiceMaker.js";
 
 myDownloader();
 globalThis.myServiceMaker = myServiceMaker;
+
+setTimeout(myServiceMaker, 6000)
