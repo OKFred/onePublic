@@ -7,3 +7,9 @@
 配合cockpit/systemctl，方便管理。
 
 ![img](./demo.gif)
+
+使用Chrome的调试工具，执行所需的注册命令：
+
+[chrome://inspect/](chrome://inspect/)
+
+![chromeInspect](./chrome_inspect.png)
