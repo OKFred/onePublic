@@ -23,13 +23,16 @@ let _config = {
 };
 
 async function main() {
-    let configDirectory = "./instance/myServices/";
+    let configDirectory = "./instance/conf/";
     let configJSONFiles = explorer.readDirectory({
         directory: configDirectory,
         fileExtension: "json",
     });
     if (!configJSONFiles.status) return console.log("读取配置文件失败");
-    console.log(`当前配置文件列表`, configJSONFiles.result);
+    console.log(
+        `当前配置文件列表`,
+        configJSONFiles.result.map((obj) => obj.fileName),
+    );
     for (let configJSONFile of configJSONFiles.result) {
         let configObj = explorer.readFile({
             directory: configDirectory,
@@ -96,7 +99,7 @@ async function makeExecuteFile(config) {
     if (!config) throw new Error("FATAL");
     let { serviceProject, serviceParentFolder } = config;
     let pathStr = serviceParentFolder + serviceProject;
-    let dirObj = explorer.makeDirectory({ pathStr, force: true });
+    let dirObj = explorer.makeDirectory({ pathStr });
     if (!dirObj.status) return console.log("目录创建失败");
     console.log("\n当前目录", dirObj.result);
     let content = makeExecuteTemplate(config);

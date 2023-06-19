@@ -6,7 +6,9 @@
 import myDownloader from "./myDownloader.js"; //下载文件
 import myServiceMaker from "./myServiceMaker.js";
 
-myDownloader();
-globalThis.myServiceMaker = myServiceMaker;
+globalThis.nodeInstance = {
+    myDownloader,
+    myServiceMaker,
+};
 
-setTimeout(myServiceMaker, 6000)
+console.log("completed registration globally as nodeInstance", globalThis.nodeInstance);
