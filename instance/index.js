@@ -12,5 +12,3 @@ globalThis.nodeInstance = {
 };
 
 console.log("completed registration globally as nodeInstance", globalThis.nodeInstance);
-
-setTimeout(myRegister, 10000);

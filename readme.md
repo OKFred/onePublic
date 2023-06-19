@@ -1,5 +1,9 @@
 ## onePublic
 
-### 提供公共服务的接口
+### 高效运维
 
-比如文件管理，上网等
+在[文件夹下](/src/conf/)写好配置文件，即可快速为systemd注册服务
+
+配合cockpit/systemctl，方便管理。
+
+![img](./demo.gif)
