@@ -105,7 +105,7 @@ async function makeExecuteFile(config) {
     let content = makeExecuteTemplate(config);
     let fileObj = explorer.makeFile({
         directory: dirObj.result,
-        fileName: `index.sh`,
+        fileName: `_index.sh`,
         content,
         force: true,
     });
@@ -113,7 +113,7 @@ async function makeExecuteFile(config) {
     console.log("\n文件创建成功", fileObj.result);
     //添加执行权限 777
     return new Promise((resolve, reject) => {
-        child_process.exec(`chmod 777 ${pathStr}/index.sh`, (error, stdout, stderr) => {
+        child_process.exec(`chmod 777 ${pathStr}/_index.sh`, (error, stdout, stderr) => {
             if (error) {
                 console.log(`权限设置失败：`, error);
                 return resolve(false);
@@ -175,7 +175,7 @@ Description=${serviceProgram}_${serviceProject}@自启动脚本
 After=default.target
 
 [Service]
-ExecStart=${serviceExecuteFolder}/index.sh
+ExecStart=${serviceExecuteFolder}/_index.sh
 
 [Install]
 WantedBy=default.target
@@ -204,6 +204,9 @@ sleep 10s
 
 # 显示当前时间
 date
+
+# 显示用户
+whoami
 
 # 启动程序
 echo "${serviceProgram}_${serviceProject}启动中..."
