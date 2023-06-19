@@ -4,5 +4,5 @@
     "serviceProject": "onePublic",
     "serviceParentFolder": "/home/zq/WorkSpace/NodeJS/",
     "serviceRepository": "https://github.com/OKFred/onePublic",
-    "serviceParams": "npm run dev"
+    "serviceParams": "node app.js"
 }
