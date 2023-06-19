@@ -4,11 +4,11 @@
  */
 
 import myDownloader from "./myDownloader.js"; //下载文件
-import myServiceMaker from "./myServiceMaker.js";
+import myRegister from "./myRegister.js";
 
 globalThis.nodeInstance = {
     myDownloader,
-    myServiceMaker,
+    myRegister,
 };
 
 console.log("completed registration globally as nodeInstance", globalThis.nodeInstance);
